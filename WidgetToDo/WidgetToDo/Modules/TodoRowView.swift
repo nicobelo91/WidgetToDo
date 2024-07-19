@@ -12,32 +12,44 @@ struct TodoRowView: View {
     @Bindable var todo: Todo
     /// View Properties
 
-    @FocusState private var isActive: Bool
     @Environment(\.modelContext) private var context
     @Environment(\.scenePhase) private var phase
+    @State private var showDetail = false
     var body: some View {
         HStack(spacing: 8) {
-            if !isActive && !todo.task.isEmpty {
-                Button(action: {
-                    todo.isCompleted.toggle()
-                    todo.lastUpdated = .now
-                    WidgetCenter.shared.reloadAllTimelines()
-                }) {
-                    Image(systemName: todo.isCompleted ? "checkmark.circle.fill" : "circle")
-                        .font(.title2)
-                        .padding(3)
-                        .contentShape(.rect)
-                        .foregroundStyle(todo.isCompleted ? .gray : .accentColor)
-                        .contentTransition(.symbolEffect(.replace))
-                }
+            Button(action: {
+                todo.isCompleted.toggle()
+                todo.lastUpdated = .now
+                WidgetCenter.shared.reloadAllTimelines()
+            }) {
+                Image(systemName: todo.isCompleted ? "checkmark.circle.fill" : "circle")
+                    .font(.title2)
+                    .padding(3)
+                    .contentShape(.rect)
+                    .foregroundStyle(todo.isCompleted ? .gray : .accentColor)
+                    .contentTransition(.symbolEffect(.replace))
             }
-            TextField("Record Video", text: $todo.task)
-                .strikethrough(todo.isCompleted)
-                .foregroundStyle(todo.isCompleted ? .gray : .primary)
-                .focused($isActive)
+            .opacity(todo.isExpired ? 0 : 1)
+            .disabled(todo.isExpired)
+            .buttonStyle(.borderless)
             
-            if !isActive && !todo.task.isEmpty {
-                // Priority Menu for Button for updating
+            VStack(alignment: .leading) {
+                Text(todo.task)
+                    .font(.title3)
+                    .foregroundStyle(textColor)
+                Text(DateHelper.Formatter.longDate.string(from: todo.dueDate))
+                    .font(.caption)
+                    .foregroundStyle(textColor)
+            }
+            .strikethrough(todo.isCompleted)
+            .containerShape(.rect)
+            .onTapGesture {
+                showDetail = true
+            }
+            
+            Spacer()
+            // Priority Menu for Button for updating
+            if !todo.isExpired {
                 Menu {
                     ForEach(Priority.allCases, id: \.rawValue) { priority in
                         Button(action: { todo.priority = priority }) {
@@ -57,31 +69,29 @@ struct TodoRowView: View {
                 }
             }
         }
-        .listRowInsets(.init(top: 10, leading: 10, bottom: 10, trailing: 10))
-        .animation(.snappy, value: isActive)
-        .onAppear {
-            isActive = todo.task.isEmpty
+        .sheet(isPresented: $showDetail) {
+            TodoDetailView(todo: todo)
         }
+        .listRowInsets(.init(top: 10, leading: 10, bottom: 10, trailing: 10))
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
             Button("", systemImage: "trash") {
                 context.delete(todo)
                 WidgetCenter.shared.reloadAllTimelines()
             }
-        }
-        .onSubmit(of: .text) {
-            if todo.task.isEmpty {
-                /// Deleting Empty Todo
-                context.delete(todo)
-            }
-            WidgetCenter.shared.reloadAllTimelines()
-        }
-        .onChange(of: phase) { oldValue, newValue in
-            if newValue != .active && todo.task.isEmpty {
-                context.delete(todo)
-            }
+            .tint(.red)
         }
         .task {
             todo.isCompleted = todo.isCompleted
+        }
+    }
+    
+    private var textColor: Color {
+        if todo.isCompleted {
+            return .gray
+        } else if todo.isExpired {
+            return .red
+        } else {
+            return .primary
         }
     }
 }

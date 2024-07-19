@@ -14,7 +14,7 @@ struct TodoList: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            TodoListEntryView(entry: entry)
+            WidgetView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
             // Setting up SwiftData Container
                 .modelContainer(for: Todo.self)
@@ -25,7 +25,7 @@ struct TodoList: Widget {
     }
 }
 
-#Preview(as: .systemSmall) {
+#Preview(as: .systemMedium) {
     TodoList()
 } timeline: {
     SimpleEntry(date: .now)

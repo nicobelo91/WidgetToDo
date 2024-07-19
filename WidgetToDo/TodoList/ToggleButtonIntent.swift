@@ -23,7 +23,7 @@ struct ToggleButtonIntent: AppIntent {
         /// Updating todo status
         let context = try ModelContext(.init(for: Todo.self))
         /// Retrieving Respective Todo
-        let descriptor = FetchDescriptor(predicate: #Predicate<Todo> {$0.taskID == id})
+        let descriptor = FetchDescriptor(predicate: #Predicate<Todo> {$0.id == id})
         if let todo = try context.fetch(descriptor).first {
             todo.isCompleted = true
             todo.lastUpdated = .now

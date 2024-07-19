@@ -14,11 +14,11 @@ struct CompletedList: View {
     
     init(showAll: Binding<Bool>) {
         let predicate = #Predicate<Todo> { $0.isCompleted }
-        let sort = [SortDescriptor(\Todo.lastUpdated, order: .reverse)]
+        let sort = [SortDescriptor(\Todo.dueDate, order: .forward)]
         
         var descriptor = FetchDescriptor(predicate: predicate, sortBy: sort)
         if !showAll.wrappedValue {
-            descriptor.fetchLimit = 15
+            descriptor.fetchLimit = 5
         }
         
         _completedList = Query(descriptor, animation: .snappy)
@@ -27,8 +27,8 @@ struct CompletedList: View {
     
     var body: some View {
         Section {
-            ForEach(completedList) {
-                TodoRowView(todo: $0)
+            ForEach(completedList) { todo in
+                TodoRowView(todo: todo)
             }
         } header: {
             HStack {
@@ -42,7 +42,7 @@ struct CompletedList: View {
             }
             .font(.caption)
         } footer: {
-            if completedList.count == 15 && !showAll && !completedList.isEmpty {
+            if completedList.count == 5 && !showAll && !completedList.isEmpty {
                 HStack {
                     Text("Showing Recent 15 Tasks")
                         .foregroundStyle(.gray)
@@ -54,10 +54,7 @@ struct CompletedList: View {
                 }
                 .font(.caption)
             }
-           
         }
-        
-
     }
 }
 

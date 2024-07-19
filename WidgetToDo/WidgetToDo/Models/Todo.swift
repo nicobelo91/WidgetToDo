@@ -12,15 +12,26 @@ import SwiftData
 class Todo {
     
     ///Used to update the to-do state of the widgets
-    private(set) var taskID: String = UUID().uuidString
+    private(set) var id: String = UUID().uuidString
     var task: String
     var isCompleted: Bool = false
+    var dueDate: Date = Date.now
     var priority: Priority = Priority.normal
     var lastUpdated: Date = Date.now
     
-    init(task: String, priority: Priority) {
+    init(task: String, dueDate: Date, priority: Priority) {
         self.task = task
+        self.dueDate = dueDate
         self.priority = priority
+    }
+    
+    var isDueToday: Bool {
+        let dateRange = Date.now ... Date.now.endOfDay()
+        return dateRange.contains(dueDate)
+    }
+    
+    var isExpired: Bool {
+        dueDate < .now
     }
 }
 
@@ -37,4 +48,8 @@ enum Priority: String, Codable, CaseIterable {
             return .red
         }
     }
+}
+
+extension Todo {
+    static let example = Todo(task: "Brush teeth", dueDate: .now, priority: .normal)
 }

@@ -1,5 +1,5 @@
 //
-//  TodoListEntryView.swift
+//  MediumSizedView.swift
 //  TodoListExtension
 //
 //  Created by Nicolas Cobelo on 19/07/2024.
@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct TodoListEntryView : View {
+struct MediumSizedView: View {
     var entry: Provider.Entry
     // Query that will fetch only three active todos at a time
     @Query(todoDescriptor, animation: .snappy) private var activeList: [Todo]
@@ -17,7 +17,7 @@ struct TodoListEntryView : View {
             ForEach(activeList) { todo in
                 HStack(spacing: 10) {
                     // Intent Action Button
-                    Button(intent: ToggleButtonIntent(id: todo.taskID)) {
+                    Button(intent: ToggleButtonIntent(id: todo.id)) {
                         Image(systemName: "circle")
                     }
                     .font(.callout)
@@ -36,7 +36,7 @@ struct TodoListEntryView : View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .overlay {
             if activeList.isEmpty {
-                Text(" No Tasks 🎉🎉")
+                Text("No Tasks 🎉🎉")
                     .font(.callout)
                     .transition(.push(from: .bottom))
             }
@@ -45,9 +45,13 @@ struct TodoListEntryView : View {
     
     static var todoDescriptor: FetchDescriptor<Todo> {
         let predicate = #Predicate<Todo> { !$0.isCompleted }
-        let sort = [SortDescriptor(\Todo.lastUpdated, order: .reverse)]
+        let sort = [SortDescriptor(\Todo.dueDate, order: .forward)]
         var descriptor = FetchDescriptor(predicate: predicate, sortBy: sort)
         descriptor.fetchLimit = 3
         return descriptor
     }
+}
+
+#Preview {
+    MediumSizedView(entry: .init(date: .now))
 }
