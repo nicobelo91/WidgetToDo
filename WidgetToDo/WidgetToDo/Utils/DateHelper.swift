@@ -18,6 +18,13 @@ struct DateHelper {
                 formatter.timeStyle = .short
                 return formatter
             }()
+        
+        /// Formats dates in short  time, e.g. `21:54`
+        static let shortTime: DateFormatter = {
+                let formatter = DateFormatter()
+                formatter.timeStyle = .short
+                return formatter
+            }()
     }
 }
 

@@ -14,29 +14,15 @@ struct MediumSizedView: View {
     @Query(todoDescriptor, animation: .snappy) private var activeList: [Todo]
     var body: some View {
         VStack {
-            ForEach(activeList) { todo in
-                HStack(spacing: 10) {
-                    // Intent Action Button
-                    Button(intent: ToggleButtonIntent(id: todo.id)) {
-                        Image(systemName: "circle")
-                    }
-                    .font(.callout)
-                    .tint(todo.priority.color.gradient)
-                    .buttonBorderShape(.circle)
-                    
-                    Text(todo.task)
-                        .font(.callout)
-                        .lineLimit(1)
-                    
-                    Spacer(minLength: 0)
-                }
+            ForEach(filteredTodos.prefix(3)) { todo in
+                WidgetRowView(todo: todo)
                 .transition(.push(from: .bottom))
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .overlay {
-            if activeList.isEmpty {
-                Text("No Tasks 🎉🎉")
+            if filteredTodos.isEmpty {
+                Text("No Tasks due today 🎉🎉")
                     .font(.callout)
                     .transition(.push(from: .bottom))
             }
@@ -47,8 +33,12 @@ struct MediumSizedView: View {
         let predicate = #Predicate<Todo> { !$0.isCompleted }
         let sort = [SortDescriptor(\Todo.dueDate, order: .forward)]
         var descriptor = FetchDescriptor(predicate: predicate, sortBy: sort)
-        descriptor.fetchLimit = 3
         return descriptor
+    }
+    
+    /// Since date isn't yet available to be used on the #Predicate macro, in the meantime, the following workaround can be used:
+    var filteredTodos: [Todo] {
+        activeList.filter({ $0.isDueToday })
     }
 }
 

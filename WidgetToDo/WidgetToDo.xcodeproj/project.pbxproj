@@ -23,6 +23,8 @@
 		7C7E0C452C4AEC8F0093D05C /* TodoListExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7C7E0C362C4AEC8E0093D05C /* TodoListExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7C7E0C492C4AED530093D05C /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E0C112C4ACBEF0093D05C /* Todo.swift */; };
 		7C7E0C4E2C4AF04E0093D05C /* ToggleButtonIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E0C4C2C4AEF8C0093D05C /* ToggleButtonIntent.swift */; };
+		7CA45C7B2C5AE1A700D6F85F /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE3D33B2C4AF6BF009DE92C /* DateHelper.swift */; };
+		7CA45C7D2C5AE64600D6F85F /* WidgetRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA45C7C2C5AE64600D6F85F /* WidgetRowView.swift */; };
 		7CE3D32D2C4AF2E5009DE92C /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE3D32B2C4AF2AE009DE92C /* Provider.swift */; };
 		7CE3D3302C4AF300009DE92C /* SimpleEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE3D32E2C4AF2F4009DE92C /* SimpleEntry.swift */; };
 		7CE3D3322C4AF31C009DE92C /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE3D3312C4AF31C009DE92C /* WidgetView.swift */; };
@@ -84,6 +86,7 @@
 		7C7E0C4A2C4AEE6B0093D05C /* WidgetToDo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetToDo.entitlements; sourceTree = "<group>"; };
 		7C7E0C4B2C4AEE790093D05C /* TodoListExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodoListExtension.entitlements; sourceTree = "<group>"; };
 		7C7E0C4C2C4AEF8C0093D05C /* ToggleButtonIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButtonIntent.swift; sourceTree = "<group>"; };
+		7CA45C7C2C5AE64600D6F85F /* WidgetRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetRowView.swift; sourceTree = "<group>"; };
 		7CE3D32B2C4AF2AE009DE92C /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		7CE3D32E2C4AF2F4009DE92C /* SimpleEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleEntry.swift; sourceTree = "<group>"; };
 		7CE3D3312C4AF31C009DE92C /* WidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetView.swift; sourceTree = "<group>"; };
@@ -212,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				7CE3D3312C4AF31C009DE92C /* WidgetView.swift */,
+				7CA45C7C2C5AE64600D6F85F /* WidgetRowView.swift */,
 				7CE3D3362C4AF470009DE92C /* SmallSizedView.swift */,
 				7CE3D3342C4AF46B009DE92C /* MediumSizedView.swift */,
 				7CE3D3382C4AF477009DE92C /* LargeSizedView.swift */,
@@ -368,6 +372,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CE3D3302C4AF300009DE92C /* SimpleEntry.swift in Sources */,
+				7CA45C7D2C5AE64600D6F85F /* WidgetRowView.swift in Sources */,
 				7CE3D3492C4B0B32009DE92C /* Date+Extensions.swift in Sources */,
 				7C7E0C3D2C4AEC8E0093D05C /* TodoListBundle.swift in Sources */,
 				7CE3D3372C4AF470009DE92C /* SmallSizedView.swift in Sources */,
@@ -376,6 +381,7 @@
 				7CE3D3352C4AF46B009DE92C /* MediumSizedView.swift in Sources */,
 				7C7E0C3F2C4AEC8E0093D05C /* TodoList.swift in Sources */,
 				7CE3D3322C4AF31C009DE92C /* WidgetView.swift in Sources */,
+				7CA45C7B2C5AE1A700D6F85F /* DateHelper.swift in Sources */,
 				7CE3D32D2C4AF2E5009DE92C /* Provider.swift in Sources */,
 				7C7E0C4E2C4AF04E0093D05C /* ToggleButtonIntent.swift in Sources */,
 			);

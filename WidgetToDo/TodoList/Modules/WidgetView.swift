@@ -14,9 +14,9 @@ struct WidgetView : View {
 
     var body: some View {
         switch widgetFamily {
-        case .systemSmall: SmallSizedView()
+        case .systemSmall: SmallSizedView(entry: entry)
         case .systemMedium: MediumSizedView(entry: entry)
-        case .systemLarge: LargeSizedView()
+        case .systemLarge: LargeSizedView(entry: entry)
         default: Text("Not implemented")
         }
     }
