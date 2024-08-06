@@ -15,7 +15,7 @@ struct TodoDetailView: View {
     @State private var priority: Priority = .normal
     @State private var completed: Bool = false
     
-    let todo: Todo
+    var todo: Todo
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     
@@ -55,8 +55,9 @@ struct TodoDetailView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
-                        let todo = Todo(task: taskName, dueDate: dueDate, priority: priority)
-                        context.insert(todo)
+                        todo.task = taskName
+                        todo.dueDate = dueDate
+                        todo.priority = priority
                         do {
                             try context.save()
                         } catch {
