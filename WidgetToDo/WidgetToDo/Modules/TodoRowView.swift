@@ -37,7 +37,7 @@ struct TodoRowView: View {
                 Text(todo.task)
                     .font(.title3)
                     .foregroundStyle(textColor)
-                Text(DateHelper.Formatter.longDate.string(from: todo.dueDate))
+                Text(DateHelper.Formatter.longDateWithTime.string(from: todo.dueDate))
                     .font(.caption)
                     .foregroundStyle(textColor)
             }

@@ -17,12 +17,22 @@ class Todo {
     var isCompleted: Bool = false
     var dueDate: Date = Date.now
     var priority: Priority = Priority.normal
+    var repetition: Repetition = Repetition.never
+    var endRepeat: EndRepeat?
     var lastUpdated: Date = Date.now
     
-    init(task: String, dueDate: Date, priority: Priority) {
+    init(
+        task: String,
+        dueDate: Date,
+        priority: Priority,
+        repetition: Repetition,
+        endRepeat: EndRepeat? = nil
+    ) {
         self.task = task
         self.dueDate = dueDate
         self.priority = priority
+        self.repetition = repetition
+        self.endRepeat = endRepeat
     }
     
     var isDueToday: Bool {
@@ -35,21 +45,6 @@ class Todo {
     }
 }
 
-enum Priority: String, Codable, CaseIterable {
-    case normal, medium, high
-    
-    var color: Color {
-        switch self {
-        case .normal:
-            return .green
-        case .medium:
-            return .yellow
-        case .high:
-            return .red
-        }
-    }
-}
-
 extension Todo {
-    static let example = Todo(task: "Brush teeth", dueDate: .now, priority: .normal)
+    static let example = Todo(task: "Brush teeth", dueDate: .now, priority: .normal, repetition: .never)
 }

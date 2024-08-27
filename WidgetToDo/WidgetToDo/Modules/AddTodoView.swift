@@ -13,6 +13,8 @@ struct AddTodoView: View {
     @State private var taskName: String = ""
     @State private var dueDate: Date = .now
     @State private var priority: Priority = .normal
+    @State private var repetition: Repetition = .never
+    @State private var endRepeat: EndRepeat?
     
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
@@ -20,31 +22,13 @@ struct AddTodoView: View {
     
     var body: some View {
         NavigationStack {
-            Form {
-                Section {
-                    TextField("Take out trash", text: $taskName)
-                } header: {
-                    Text("Title")
-                }
-                
-                Section {
-                    DatePicker(selection: $dueDate) {
-                        Text("Select a date")
-                    }
-                } header: {
-                    Text("Due Date")
-                }
-                
-                Section {
-                    Picker("Priority", selection: $priority) {
-                        ForEach(Priority.allCases, id: \.self) { priority in
-                            Text(priority.rawValue.capitalized)
-                        }
-                    }.pickerStyle(.segmented)
-                } header: {
-                    Text("Priority")
-                }
-            }
+            FormView(
+                taskName: $taskName,
+                dueDate: $dueDate,
+                priority: $priority,
+                repetition: $repetition,
+                endRepeat: $endRepeat
+            )
             .navigationTitle("Add todo item")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -54,7 +38,7 @@ struct AddTodoView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
-                        let todo = Todo(task: taskName, dueDate: dueDate, priority: priority)
+                        let todo = Todo(task: taskName, dueDate: dueDate, priority: priority, repetition: repetition, endRepeat: endRepeat)
                         context.insert(todo)
                         do {
                             try context.save()

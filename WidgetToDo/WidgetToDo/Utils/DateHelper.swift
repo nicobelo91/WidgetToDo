@@ -11,8 +11,16 @@ import Foundation
 struct DateHelper {
     /// Namespace enum containing static lazy DateFormatter instances
     enum Formatter {
-        /// Formats dates in medium format with time, e.g. `19 Jul 2022 at 21:54`
+        
+        /// Formats dates in medium format with time, e.g. `19 Jul 2022`
         static let longDate: DateFormatter = {
+                let formatter = DateFormatter()
+                formatter.dateStyle = .medium
+                return formatter
+            }()
+        
+        /// Formats dates in medium format with time, e.g. `19 Jul 2022 at 21:54`
+        static let longDateWithTime: DateFormatter = {
                 let formatter = DateFormatter()
                 formatter.dateStyle = .medium
                 formatter.timeStyle = .short
