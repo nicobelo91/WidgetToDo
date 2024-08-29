@@ -38,8 +38,13 @@ struct AddTodoView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
-                        let todo = Todo(task: taskName, dueDate: dueDate, priority: priority, repetition: repetition, endRepeat: endRepeat)
-                        context.insert(todo)
+                        let dueDates = generateDates()
+                        
+                        for date in dueDates {
+                            let todo = Todo(task: taskName, dueDate: date, priority: priority, repetition: repetition, endRepeat: endRepeat)
+                            context.insert(todo)
+                        }
+                        
                         do {
                             try context.save()
                         } catch {
@@ -55,6 +60,33 @@ struct AddTodoView: View {
                 
             }
         }
+    }
+    
+    func generateDates() -> [Date] {
+        guard let component = repetition.addToDate.component, let value = repetition.addToDate.value else { return [dueDate] }
+        
+        var startDate = dueDate
+        var endDate: Date?
+        
+        var dates: [Date] = [dueDate]
+        
+        switch endRepeat {
+        case .repeatForever:
+            endDate = Calendar.current.date(byAdding: .year, value: 10, to: startDate)!
+        case .endRepeatDate(let date):
+            endDate = date
+        default:
+            endDate = nil
+        }
+        guard let endDate else {
+            return [dueDate]
+        }
+        
+        while startDate < endDate {
+            startDate = Calendar.current.date(byAdding: component, value: value, to: startDate)!
+            dates.append(startDate)
+        }
+        return dates
     }
 }
 

@@ -7,14 +7,17 @@
 
 import SwiftUI
 import WidgetKit
+import SwiftData
 
 struct TodoRowView: View {
     @Bindable var todo: Todo
+    @Query private var todoList: [Todo]
     /// View Properties
 
     @Environment(\.modelContext) private var context
     @Environment(\.scenePhase) private var phase
     @State private var showDetail = false
+    @State private var showDeleteAlert = false
     var body: some View {
         HStack(spacing: 8) {
             Button(action: {
@@ -72,11 +75,19 @@ struct TodoRowView: View {
         .sheet(isPresented: $showDetail) {
             TodoDetailView(todo: todo)
         }
+        .alert("Are you sure you want to delete this task? This is a recurring task.", isPresented: $showDeleteAlert) {
+            Button("Delete this task only", role: .destructive) { deleteTask() }
+            Button("Delete all future tasks", role: .destructive) { deleteAllRelatedTasks() }
+                    Button("Cancel", role: .cancel) { }
+                }
         .listRowInsets(.init(top: 10, leading: 10, bottom: 10, trailing: 10))
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
             Button("", systemImage: "trash") {
-                context.delete(todo)
-                WidgetCenter.shared.reloadAllTimelines()
+                if todo.repetition != .never {
+                    showDeleteAlert = true
+                } else {
+                    deleteTask()
+                }
             }
             .tint(.red)
         }
@@ -84,7 +95,6 @@ struct TodoRowView: View {
             todo.isCompleted = todo.isCompleted
         }
     }
-    
     private var textColor: Color {
         if todo.isCompleted {
             return .gray
@@ -92,6 +102,20 @@ struct TodoRowView: View {
             return .red
         } else {
             return .primary
+        }
+    }
+    
+    private func deleteTask() {
+        context.delete(todo)
+        WidgetCenter.shared.reloadAllTimelines()
+    }
+    
+    private func deleteAllRelatedTasks() {
+        for todoItem in todoList {
+            if todoItem.task == todo.task, todoItem.dueDate >= todo.dueDate {
+                context.delete(todoItem)
+                WidgetCenter.shared.reloadAllTimelines()
+            }
         }
     }
 }

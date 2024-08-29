@@ -41,14 +41,7 @@ struct FormView: View {
                 }
                 
                 if let endRepeat, repetition != .never {
-                    NavigationLink(destination: { EndRepeatList(selection: Binding<EndRepeat>(
-                        get: {
-                            self.endRepeat ?? .repeatForever
-                        },
-                        set: {
-                            self.endRepeat = $0
-                        }
-                    )) }) {
+                    NavigationLink(destination: { destinationView }) {
                         HStack {
                             Text("End Repeat")
                             Spacer()
@@ -71,6 +64,17 @@ struct FormView: View {
                 Text("Priority")
             }
         }
+    }
+    
+    private var destinationView: some View {
+        EndRepeatList(selection: Binding<EndRepeat>(
+            get: {
+                self.endRepeat ?? .repeatForever
+            },
+            set: {
+                self.endRepeat = $0
+            }
+        ))
     }
 }
 

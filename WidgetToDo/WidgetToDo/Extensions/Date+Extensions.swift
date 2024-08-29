@@ -10,7 +10,7 @@ import Foundation
 extension Date {
 
     func endOfDay() -> Date {
-        var calendar = Calendar.current
+        let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: self)
         
         return calendar.date(byAdding: .day, value: 1, to: startOfDay)!
