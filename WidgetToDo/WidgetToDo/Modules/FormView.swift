@@ -30,7 +30,7 @@ struct FormView: View {
                     HStack {
                         Text("Repeat")
                         Spacer()
-                        Text(repetition.rawValue.capitalized)
+                        Text(repetition.description)
                             .foregroundStyle(.placeholder)
                     }
                     .onChange(of: repetition) { oldValue, newValue in
