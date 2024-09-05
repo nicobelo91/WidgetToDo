@@ -13,9 +13,10 @@
 		7C07FAD62C878AFB00801E27 /* MultipleSelectionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FAD52C878AFB00801E27 /* MultipleSelectionRow.swift */; };
 		7C07FAD82C878EA100801E27 /* Ordinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FAD72C878EA100801E27 /* Ordinal.swift */; };
 		7C07FADC2C879C9A00801E27 /* MultipleSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FADB2C879C9A00801E27 /* MultipleSelectionCell.swift */; };
+		7C3F9EE92C8A142800A86E94 /* Ordinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FAD72C878EA100801E27 /* Ordinal.swift */; };
 		7C4CFC882C810B2F00093BBE /* CustomRepetitionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4CFC872C810B2F00093BBE /* CustomRepetitionList.swift */; };
-		7C4CFC8A2C810EFF00093BBE /* CustomRepetitionFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4CFC892C810EFF00093BBE /* CustomRepetitionFrequency.swift */; };
-		7C4CFC8B2C810F7900093BBE /* CustomRepetitionFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4CFC892C810EFF00093BBE /* CustomRepetitionFrequency.swift */; };
+		7C4CFC8A2C810EFF00093BBE /* CustomRepetition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4CFC892C810EFF00093BBE /* CustomRepetition.swift */; };
+		7C4CFC8B2C810F7900093BBE /* CustomRepetition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4CFC892C810EFF00093BBE /* CustomRepetition.swift */; };
 		7C7E0C032C4ACA190093D05C /* WidgetToDoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E0C022C4ACA190093D05C /* WidgetToDoApp.swift */; };
 		7C7E0C052C4ACA190093D05C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E0C042C4ACA190093D05C /* ContentView.swift */; };
 		7C7E0C072C4ACA1B0093D05C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C7E0C062C4ACA1B0093D05C /* Assets.xcassets */; };
@@ -91,7 +92,7 @@
 		7C07FAD72C878EA100801E27 /* Ordinal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ordinal.swift; sourceTree = "<group>"; };
 		7C07FADB2C879C9A00801E27 /* MultipleSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSelectionCell.swift; sourceTree = "<group>"; };
 		7C4CFC872C810B2F00093BBE /* CustomRepetitionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRepetitionList.swift; sourceTree = "<group>"; };
-		7C4CFC892C810EFF00093BBE /* CustomRepetitionFrequency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRepetitionFrequency.swift; sourceTree = "<group>"; };
+		7C4CFC892C810EFF00093BBE /* CustomRepetition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRepetition.swift; sourceTree = "<group>"; };
 		7C7E0BFF2C4ACA190093D05C /* WidgetToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WidgetToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C7E0C022C4ACA190093D05C /* WidgetToDoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetToDoApp.swift; sourceTree = "<group>"; };
 		7C7E0C042C4ACA190093D05C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -215,7 +216,7 @@
 				7C7E0C112C4ACBEF0093D05C /* Todo.swift */,
 				7CB77EB52C7E53F90081FC88 /* Priority.swift */,
 				7CB77EB72C7E54160081FC88 /* Repetition.swift */,
-				7C4CFC892C810EFF00093BBE /* CustomRepetitionFrequency.swift */,
+				7C4CFC892C810EFF00093BBE /* CustomRepetition.swift */,
 				7C07FAD72C878EA100801E27 /* Ordinal.swift */,
 				7CB77EB92C7E54200081FC88 /* EndRepeat.swift */,
 			);
@@ -431,7 +432,7 @@
 				7C7E0C1A2C4AE13D0093D05C /* TodoRowView.swift in Sources */,
 				7CE3D3402C4AFBBA009DE92C /* DueTodayList.swift in Sources */,
 				7C07FAD62C878AFB00801E27 /* MultipleSelectionRow.swift in Sources */,
-				7C4CFC8A2C810EFF00093BBE /* CustomRepetitionFrequency.swift in Sources */,
+				7C4CFC8A2C810EFF00093BBE /* CustomRepetition.swift in Sources */,
 				7C07FAD02C878A7200801E27 /* WeeklyRepetitionSection.swift in Sources */,
 				7CE3D34B2C4B0ECA009DE92C /* TodoDetailView.swift in Sources */,
 				7C7E0C052C4ACA190093D05C /* ContentView.swift in Sources */,
@@ -468,7 +469,8 @@
 				7CB77EBB2C7E54600081FC88 /* Priority.swift in Sources */,
 				7CE3D3322C4AF31C009DE92C /* WidgetView.swift in Sources */,
 				7CA45C7B2C5AE1A700D6F85F /* DateHelper.swift in Sources */,
-				7C4CFC8B2C810F7900093BBE /* CustomRepetitionFrequency.swift in Sources */,
+				7C3F9EE92C8A142800A86E94 /* Ordinal.swift in Sources */,
+				7C4CFC8B2C810F7900093BBE /* CustomRepetition.swift in Sources */,
 				7CE3D32D2C4AF2E5009DE92C /* Provider.swift in Sources */,
 				7C7E0C4E2C4AF04E0093D05C /* ToggleButtonIntent.swift in Sources */,
 				7CB77EBC2C7E54620081FC88 /* Repetition.swift in Sources */,

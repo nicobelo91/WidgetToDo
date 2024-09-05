@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct WeeklyRepetitionSection: View {
-    @Binding var selectedDaysOfWeek: [String]
+    @Binding var customRepetition: CustomRepetition
     var body: some View {
         Section {
             ForEach(DateFormatter().weekdaySymbols, id: \.self) { day in
-                MultipleSelectionRow(title: day, isSelected: selectedDaysOfWeek.contains(day)) {
-                    if selectedDaysOfWeek.contains(day) {
-                        guard selectedDaysOfWeek.count > 1 else { return }
-                        selectedDaysOfWeek.removeAll(where: { $0 == day })
+                MultipleSelectionRow(title: day, isSelected: customRepetition.selectedDaysOfWeek.contains(day)) {
+                    if customRepetition.selectedDaysOfWeek.contains(day) {
+                        guard customRepetition.selectedDaysOfWeek.count > 1 else { return }
+                        customRepetition.selectedDaysOfWeek.removeAll(where: { $0 == day })
                     }
                     else {
-                        selectedDaysOfWeek.append(day)
+                        customRepetition.selectedDaysOfWeek.append(day)
                     }
                 }
                 
@@ -28,5 +28,5 @@ struct WeeklyRepetitionSection: View {
 }
 
 #Preview {
-    WeeklyRepetitionSection(selectedDaysOfWeek: .constant([]))
+    WeeklyRepetitionSection(customRepetition: .constant(.initialValue))
 }

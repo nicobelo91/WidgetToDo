@@ -7,22 +7,22 @@
 
 import Foundation
 
-enum Ordinal: Int, CaseIterable {
-    case first = 1
-    case second
-    case third
-    case fourth
-    case fifth
-    case last
-    
-    var title: String {
-        switch self {
-        case .first: return "first"
-        case .second: return "second"
-        case .third: return "third"
-        case .fourth: return "fourth"
-        case .fifth: return "fifth"
-        case .last: return "last"
-        }
-    }
-}
+//enum Ordinal: Int, CaseIterable {
+//    case first = 1
+//    case second
+//    case third
+//    case fourth
+//    case fifth
+//    case last
+//    
+//    var title: String {
+//        switch self {
+//        case .first: return "first"
+//        case .second: return "second"
+//        case .third: return "third"
+//        case .fourth: return "fourth"
+//        case .fifth: return "fifth"
+//        case .last: return "last"
+//        }
+//    }
+//}

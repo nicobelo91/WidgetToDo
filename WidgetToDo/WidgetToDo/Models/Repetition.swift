@@ -21,7 +21,7 @@ enum Repetition: Codable, CaseIterable, Hashable {
     case every3Months
     case every6Months
     case yearly
-    case custom//(frequency: CustomRepetitionFrequency, every: Int)
+    case custom//(frequency: CustomRepetition, every: Int)
     
     static var mainCases: [Repetition] {
         return [.never, .hourly, .daily, .weekly, .biweekly, .monthly, .every3Months, .every6Months, .yearly]
@@ -57,7 +57,7 @@ enum Repetition: Codable, CaseIterable, Hashable {
         }
     }
     
-    private func frequencyMapper(using frequency: CustomRepetitionFrequency) -> Calendar.Component {
+    private func frequencyMapper(using frequency: CustomRepetition.Frequency) -> Calendar.Component {
         switch frequency {
         case .hourly: return .hour
         case .daily: return .day

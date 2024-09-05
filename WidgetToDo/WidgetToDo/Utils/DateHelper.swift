@@ -34,5 +34,16 @@ struct DateHelper {
                 return formatter
             }()
     }
+    
+    static func monthSymbol(from shortMonthSymbol: String) -> String? {
+        let formatter1 = DateFormatter()
+        formatter1.setLocalizedDateFormatFromTemplate("MMM")
+        
+        guard let monthDate = formatter1.date(from: shortMonthSymbol) else { return nil}
+        
+        let formatter2 = DateFormatter()
+        formatter2.dateFormat = "MMMM"
+        return formatter2.string(from: monthDate)
+    }
 }
 

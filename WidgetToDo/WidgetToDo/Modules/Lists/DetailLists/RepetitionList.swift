@@ -8,13 +8,11 @@
 import SwiftUI
 
 struct RepetitionList: View {
-    typealias Frequency = CustomRepetitionFrequency
-    
     @Binding var selection: Repetition
     @Environment(\.dismiss) var dismiss
     @State private var didTapOnCustom = false
-    @State private var customFrequency: Frequency = .daily
-    @State private var customValue: Int = 1
+    @State private var customRepetition: CustomRepetition = .initialValue
+    
     var body: some View {
         List {
             Section {
@@ -49,13 +47,15 @@ struct RepetitionList: View {
                     didTapOnCustom = true
                 }
             } footer: {
-                Text("Task will be repeated every day")
+                if selection == .custom {
+                    Text(customRepetition.description)
+                }
             }
            
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $didTapOnCustom) {
-            CustomRepetitionList(frequency: $customFrequency, every: $customValue)
+            CustomRepetitionList(customRepetition: $customRepetition)
         }
     }
     

@@ -8,10 +8,7 @@
 import SwiftUI
 
 struct YearlyRepetitionSection: View {
-    @Binding var selectedMonthsOfYear: [String]
-    @State private var ordinal: Ordinal = .first
-    @State private var weekday: String = DateFormatter().weekdaySymbols.first!
-    @State private var showDatePicker = false
+    @Binding var customRepetition: CustomRepetition
     
     var columns: [GridItem] = [
            GridItem(.flexible(), spacing: 0),
@@ -24,13 +21,13 @@ struct YearlyRepetitionSection: View {
         Section {
             LazyVGrid(columns: columns, spacing: 0) {
                 ForEach(DateFormatter().shortMonthSymbols, id: \.self) { month in
-                    MultipleSelectionCell(title: month, isSelected: selectedMonthsOfYear.contains(month)) {
-                        if selectedMonthsOfYear.contains(month) {
-                            guard selectedMonthsOfYear.count > 1 else { return }
-                            selectedMonthsOfYear.removeAll(where: { $0 == month })
+                    MultipleSelectionCell(title: month, isSelected: customRepetition.selectedMonthsOfYear.contains(month)) {
+                        if customRepetition.selectedMonthsOfYear.contains(month) {
+                            guard customRepetition.selectedMonthsOfYear.count > 1 else { return }
+                            customRepetition.selectedMonthsOfYear.removeAll(where: { $0 == month })
                         }
                         else {
-                            selectedMonthsOfYear.append(month)
+                            customRepetition.selectedMonthsOfYear.append(month)
                         }
                     }
                 }
@@ -40,13 +37,13 @@ struct YearlyRepetitionSection: View {
         }
         
         Section {
-            Toggle(isOn: $showDatePicker.animation(.easeInOut)) {
+            Toggle(isOn: $customRepetition.isDayOfWeekSelected.animation(.easeInOut)) {
                 Text("Days of Week")
             }
-            if showDatePicker {
+            if customRepetition.isDayOfWeekSelected {
                 HStack(spacing: 0) {
-                    Picker("Ordinal", selection: $ordinal) {
-                        ForEach(Ordinal.allCases, id: \.self) {
+                    Picker("Ordinal", selection: $customRepetition.ordinal) {
+                        ForEach(CustomRepetition.Ordinal.allCases, id: \.self) {
                             Text($0.title)
                         }
                     }
@@ -54,7 +51,7 @@ struct YearlyRepetitionSection: View {
                     .padding(.trailing, -15)
                     .clipped()
 
-                    Picker("Day", selection: $weekday) {
+                    Picker("Day", selection: $customRepetition.weekday) {
                         ForEach(DateFormatter().weekdaySymbols, id: \.self) {
                             Text($0)
                         }
@@ -69,5 +66,5 @@ struct YearlyRepetitionSection: View {
 }
 
 #Preview {
-    YearlyRepetitionSection(selectedMonthsOfYear: .constant(["Jan"]))
+    YearlyRepetitionSection(customRepetition: .constant(.initialValue))
 }

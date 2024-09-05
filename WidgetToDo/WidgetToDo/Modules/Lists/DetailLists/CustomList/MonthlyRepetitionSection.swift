@@ -13,10 +13,8 @@ struct MonthlyRepetitionSection: View {
         case onThe = "On The..."
     }
     
-    @Binding var selectedDaysOfMonth: [Int]
+    @Binding var customRepetition: CustomRepetition
     @State private var selection: MonthlySelection = .each
-    @State private var ordinal: Ordinal = .first
-    @State private var weekday: String = DateFormatter().weekdaySymbols.first!
     
     var columns: [GridItem] = [
            GridItem(.flexible(), spacing: 0),
@@ -27,7 +25,7 @@ struct MonthlyRepetitionSection: View {
            GridItem(.flexible(), spacing: 0),
            GridItem(.flexible(), spacing: 0)
        ]
-    
+
     var body: some View {
         Section {
             ForEach(MonthlySelection.allCases, id: \.self) { item in
@@ -50,13 +48,13 @@ struct MonthlyRepetitionSection: View {
                 case .each:
                     LazyVGrid(columns: columns, spacing: 0) {
                         ForEach(1...31, id: \.self) { i in
-                            MultipleSelectionCell(title: "\(i)", isSelected: selectedDaysOfMonth.contains(i)) {
-                                if selectedDaysOfMonth.contains(i) {
-                                    guard selectedDaysOfMonth.count > 1 else { return }
-                                    selectedDaysOfMonth.removeAll(where: { $0 == i })
+                            MultipleSelectionCell(title: "\(i)", isSelected: customRepetition.selectedDaysOfMonth.contains(i)) {
+                                if customRepetition.selectedDaysOfMonth.contains(i) {
+                                    guard customRepetition.selectedDaysOfMonth.count > 1 else { return }
+                                    customRepetition.selectedDaysOfMonth.removeAll(where: { $0 == i })
                                 }
                                 else {
-                                    selectedDaysOfMonth.append(i)
+                                    customRepetition.selectedDaysOfMonth.append(i)
                                 }
                             }
                         }
@@ -65,8 +63,8 @@ struct MonthlyRepetitionSection: View {
                     .padding(.horizontal, -20)
                 case .onThe:
                     HStack(spacing: 0) {
-                        Picker("Ordinal", selection: $ordinal) {
-                            ForEach(Ordinal.allCases, id: \.self) {
+                        Picker("Ordinal", selection: $customRepetition.ordinal) {
+                            ForEach(CustomRepetition.Ordinal.allCases, id: \.self) {
                                 Text($0.title)
                             }
                         }
@@ -74,7 +72,7 @@ struct MonthlyRepetitionSection: View {
                         .padding(.trailing, -15)
                         .clipped()
 
-                        Picker("Day", selection: $weekday) {
+                        Picker("Day", selection: $customRepetition.weekday) {
                             ForEach(DateFormatter().weekdaySymbols, id: \.self) {
                                 Text($0)
                             }
@@ -85,9 +83,21 @@ struct MonthlyRepetitionSection: View {
                     }
                 }
         }
+        .onAppear(perform: {
+            if customRepetition.isDayOfWeekSelected {
+                selection = .onThe
+            }
+        })
+        .onChange(of: selection) { _, newValue in
+            if newValue == .onThe {
+                customRepetition.isDayOfWeekSelected = true
+            } else {
+                customRepetition.isDayOfWeekSelected = false
+            }
+        }
     }
 }
 
 #Preview {
-    MonthlyRepetitionSection(selectedDaysOfMonth: .constant([1]))
+    MonthlyRepetitionSection(customRepetition: .constant(.initialValue))
 }
