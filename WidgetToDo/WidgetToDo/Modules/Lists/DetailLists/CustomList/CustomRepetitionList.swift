@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CustomRepetitionList: View {
     @Binding var customRepetition: CustomRepetition
+    @Binding var selection: Repetition
     @State private var didTapOnFrequency = false
     @State private var didTapOnEvery = false
     @State private var valuePickerSelection = [String]()
@@ -89,6 +90,9 @@ struct CustomRepetitionList: View {
             subSectionView
         }
         .navigationBarTitleDisplayMode(.inline)
+        .onChange(of: customRepetition) { oldValue, newValue in
+            selection = .custom(frequency: newValue.frequency, every: newValue.every)
+        }
     }
     
     @ViewBuilder
@@ -104,5 +108,5 @@ struct CustomRepetitionList: View {
 }
 
 #Preview {
-    CustomRepetitionList(customRepetition: .constant(.initialValue))
+    CustomRepetitionList(customRepetition: .constant(.initialValue), selection: .constant(.biweekly))
 }

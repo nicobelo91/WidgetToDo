@@ -45,5 +45,20 @@ struct DateHelper {
         formatter2.dateFormat = "MMMM"
         return formatter2.string(from: monthDate)
     }
+    
+    static func datesOfCurrentMonth(with weekday : Int) -> [Date] {
+        let calendar = Calendar.current
+        var components = calendar.dateComponents([.year, .month, .weekdayOrdinal], from: Date())
+        components.weekday = weekday
+        var result = [Date]()
+
+        for ordinal in 1..<6 { // maximum 5 occurrences
+            components.weekdayOrdinal = ordinal
+            let date = calendar.date(from: components)!
+            if calendar.component(.month, from: date) != components.month! { break }
+            result.append(calendar.date(from: components)!)
+        }
+        return result
+    }
 }
 

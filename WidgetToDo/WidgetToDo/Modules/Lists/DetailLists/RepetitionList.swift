@@ -22,7 +22,7 @@ struct RepetitionList: View {
                         Spacer()
                         Image(systemName: "checkmark")
                             .foregroundStyle(.blue)
-                            .opacity(isEqual(to: item) ? 1 : 0)
+                            .opacity(selection == item ? 1 : 0)
                     }
                     .contentShape(.rect)
                     .onTapGesture {
@@ -37,17 +37,17 @@ struct RepetitionList: View {
                 HStack {
                     Text("Custom")
                     Spacer()
-                    Image(systemName: isEqualToCustomCase() ? "checkmark" : "chevron.right")
-                        .foregroundStyle(isEqualToCustomCase() ? .blue : .gray)
+                    Image(systemName: selection.isEqualToCustom() ? "checkmark" : "chevron.right")
+                        .foregroundStyle(selection.isEqualToCustom() ? .blue : .gray)
                 }
                 .contentShape(.rect)
                 .onTapGesture {
                     //selection = .custom(frequency: customFrequency, every: customValue)
-                    selection = .custom
+                    selection = .custom(frequency: .daily, every: 1)
                     didTapOnCustom = true
                 }
             } footer: {
-                if selection == .custom {
+                if selection.isEqualToCustom() {
                     Text(customRepetition.description)
                 }
             }
@@ -55,26 +55,8 @@ struct RepetitionList: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $didTapOnCustom) {
-            CustomRepetitionList(customRepetition: $customRepetition)
+            CustomRepetitionList(customRepetition: $customRepetition, selection: $selection)
         }
-    }
-    
-    private func isEqual(to item: Repetition) -> Bool {
-        switch selection {
-//        case .custom:
-//            if case .custom = item {
-//                return true
-//            } else {
-//                return false
-//            }
-        default:
-            return selection == item
-        }
-    }
-    
-    private func isEqualToCustomCase() -> Bool {
-        //isEqual(to: .custom(frequency: customFrequency, every: customValue))
-        selection == .custom
     }
 }
 

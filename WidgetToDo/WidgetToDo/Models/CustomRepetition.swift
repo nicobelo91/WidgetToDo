@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct CustomRepetition: Codable {
+struct CustomRepetition: Codable, Equatable {
     var frequency: Frequency {
         didSet {
             isDayOfWeekSelected = false
