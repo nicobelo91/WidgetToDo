@@ -28,6 +28,7 @@ struct YearlyRepetitionSection: View {
                         }
                         else {
                             customRepetition.selectedMonthsOfYear.append(month)
+                            customRepetition.selectedMonthsOfYear.sort(by: sortMonths)
                         }
                     }
                 }
@@ -62,6 +63,14 @@ struct YearlyRepetitionSection: View {
                 }
             }
         }
+    }
+    
+    func sortMonths(value1: String, value2: String) -> Bool {
+        guard let firstItemIndex = DateFormatter().shortMonthSymbols!.firstIndex(of: value1),
+            let secondItemIndex = DateFormatter().shortMonthSymbols!.firstIndex(of: value2) else {
+                return false
+        }
+        return firstItemIndex < secondItemIndex
     }
 }
 

@@ -55,6 +55,7 @@ struct MonthlyRepetitionSection: View {
                                 }
                                 else {
                                     customRepetition.selectedDaysOfMonth.append(i)
+                                    customRepetition.selectedDaysOfMonth.sort(by: {$0 < $1})
                                 }
                             }
                         }

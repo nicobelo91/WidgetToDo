@@ -13,6 +13,8 @@
 		7C07FAD62C878AFB00801E27 /* MultipleSelectionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FAD52C878AFB00801E27 /* MultipleSelectionRow.swift */; };
 		7C07FAD82C878EA100801E27 /* Ordinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FAD72C878EA100801E27 /* Ordinal.swift */; };
 		7C07FADC2C879C9A00801E27 /* MultipleSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FADB2C879C9A00801E27 /* MultipleSelectionCell.swift */; };
+		7C3F19432C9BB18300077470 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3F19422C9BB18300077470 /* Int+Extensions.swift */; };
+		7C3F19442C9BB1D000077470 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3F19422C9BB18300077470 /* Int+Extensions.swift */; };
 		7C3F9EE92C8A142800A86E94 /* Ordinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FAD72C878EA100801E27 /* Ordinal.swift */; };
 		7C4CFC882C810B2F00093BBE /* CustomRepetitionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4CFC872C810B2F00093BBE /* CustomRepetitionList.swift */; };
 		7C4CFC8A2C810EFF00093BBE /* CustomRepetition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4CFC892C810EFF00093BBE /* CustomRepetition.swift */; };
@@ -91,6 +93,7 @@
 		7C07FAD52C878AFB00801E27 /* MultipleSelectionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSelectionRow.swift; sourceTree = "<group>"; };
 		7C07FAD72C878EA100801E27 /* Ordinal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ordinal.swift; sourceTree = "<group>"; };
 		7C07FADB2C879C9A00801E27 /* MultipleSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSelectionCell.swift; sourceTree = "<group>"; };
+		7C3F19422C9BB18300077470 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		7C4CFC872C810B2F00093BBE /* CustomRepetitionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRepetitionList.swift; sourceTree = "<group>"; };
 		7C4CFC892C810EFF00093BBE /* CustomRepetition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRepetition.swift; sourceTree = "<group>"; };
 		7C7E0BFF2C4ACA190093D05C /* WidgetToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WidgetToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -317,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				7CE3D3472C4B042A009DE92C /* Date+Extensions.swift */,
+				7C3F19422C9BB18300077470 /* Int+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -447,6 +451,7 @@
 				7CB77EBA2C7E54200081FC88 /* EndRepeat.swift in Sources */,
 				7CB77EB82C7E54160081FC88 /* Repetition.swift in Sources */,
 				7C7E0C032C4ACA190093D05C /* WidgetToDoApp.swift in Sources */,
+				7C3F19432C9BB18300077470 /* Int+Extensions.swift in Sources */,
 				7C07FAD42C878ADE00801E27 /* YearlyRepetitionSection.swift in Sources */,
 				7C07FAD22C878ACA00801E27 /* MonthlyRepetitionSection.swift in Sources */,
 			);
@@ -457,6 +462,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CE3D3302C4AF300009DE92C /* SimpleEntry.swift in Sources */,
+				7C3F19442C9BB1D000077470 /* Int+Extensions.swift in Sources */,
 				7CA45C7D2C5AE64600D6F85F /* WidgetRowView.swift in Sources */,
 				7CB77EBD2C7E54650081FC88 /* EndRepeat.swift in Sources */,
 				7CE3D3492C4B0B32009DE92C /* Date+Extensions.swift in Sources */,

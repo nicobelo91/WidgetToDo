@@ -54,7 +54,7 @@ struct CustomRepetition: Codable {
             if isDayOfWeekSelected {
                 text += " on the \(ordinal.title) \(weekday) of the month"
             } else {
-                text += " on the 5th"
+                text += " on the \(selectedDaysOfMonth.compactMap({$0.ordinal}).formatted())"
             }
         case .yearly:
             let months = selectedMonthsOfYear.compactMap { DateHelper.monthSymbol(from: $0)}
