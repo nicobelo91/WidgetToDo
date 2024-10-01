@@ -60,6 +60,14 @@ struct DateHelper {
         return 0
     }
     
+    static func monthInt(from shortMonthSymbol: String?) -> Int {
+        let calendar = Calendar.current
+        if let monthIndex = calendar.shortMonthSymbols.firstIndex(where: { $0 == shortMonthSymbol}) {
+            return monthIndex + 1
+        }
+        return 0
+    }
+    
     static func datesOfCurrentMonth(with weekday: Int) -> [Date] {
         let calendar = Calendar.current
         var components = calendar.dateComponents([.year, .month, .weekdayOrdinal], from: Date())
