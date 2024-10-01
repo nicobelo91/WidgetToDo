@@ -13,6 +13,7 @@ struct FormView: View {
     @Binding var priority: Priority
     @Binding var repetition: Repetition
     @Binding var endRepeat: EndRepeat?
+    @Binding var customRepetition: CustomRepetition
     
     var body: some View {
         Form {
@@ -26,7 +27,7 @@ struct FormView: View {
                 DatePicker(selection: $dueDate) {
                     Text("Select a date")
                 }
-                NavigationLink(destination: { RepetitionList(selection: $repetition) }) {
+                NavigationLink(destination: { RepetitionList(selection: $repetition, customRepetition: $customRepetition) }) {
                     HStack {
                         Text("Repeat")
                         Spacer()
@@ -79,5 +80,5 @@ struct FormView: View {
 }
 
 #Preview {
-    FormView(taskName: .constant(""), dueDate: .constant(.now), priority: .constant(.medium), repetition: .constant(.never), endRepeat: .constant(nil))
+    FormView(taskName: .constant(""), dueDate: .constant(.now), priority: .constant(.medium), repetition: .constant(.never), endRepeat: .constant(nil), customRepetition: .constant(.initialValue))
 }

@@ -9,10 +9,10 @@ import SwiftUI
 
 struct RepetitionList: View {
     @Binding var selection: Repetition
+    @Binding var customRepetition: CustomRepetition
     @Environment(\.dismiss) var dismiss
     @State private var didTapOnCustom = false
-    @State private var customRepetition: CustomRepetition = .initialValue
-    
+ 
     var body: some View {
         List {
             Section {
@@ -61,5 +61,5 @@ struct RepetitionList: View {
 }
 
 #Preview {
-    RepetitionList(selection: .constant(.never))
+    RepetitionList(selection: .constant(.never), customRepetition: .constant(.initialValue))
 }

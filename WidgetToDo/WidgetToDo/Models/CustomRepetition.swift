@@ -69,22 +69,12 @@ struct CustomRepetition: Codable, Equatable {
 }
 
 extension CustomRepetition {
-    enum Frequency: Codable, CaseIterable {
+    enum Frequency: String, Codable, CaseIterable {
         case hourly
         case daily
         case weekly
         case monthly
         case yearly
-        
-        var description: String {
-            switch self {
-            case .hourly: return "Hourly"
-            case .daily: return "Daily"
-            case .weekly: return "Weekly"
-            case .monthly: return "Monthly"
-            case .yearly: return "Yearly"
-            }
-        }
     }
     
     enum Ordinal: Int, Codable, CaseIterable {

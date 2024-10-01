@@ -21,7 +21,7 @@ struct CustomRepetitionList: View {
                 HStack {
                     Text("Frequency")
                     Spacer()
-                    Text(customRepetition.frequency.description)
+                    Text(customRepetition.frequency.rawValue.capitalized)
                         .foregroundStyle(didTapOnFrequency ? .blue : .gray)
                 }
                 .contentShape(.rect)
@@ -36,7 +36,7 @@ struct CustomRepetitionList: View {
                 if didTapOnFrequency {
                     Picker("Frequency", selection: $customRepetition.frequency) {
                         ForEach(CustomRepetition.Frequency.allCases, id: \.self) {
-                            Text($0.description)
+                            Text($0.rawValue.capitalized)
                         }
                     }
                     .pickerStyle(.wheel)
@@ -92,6 +92,29 @@ struct CustomRepetitionList: View {
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: customRepetition) { oldValue, newValue in
             selection = .custom(frequency: newValue.frequency, every: newValue.every)
+            switch customRepetition.frequency {
+            case .weekly:
+                print(Calendar.Component.weekOfYear)
+                print(customRepetition.selectedDaysOfWeek)
+            case .monthly:
+                // Logic to switch between MonthlyRepetitionSection.MonthlySelection's cases
+                // if selection == each
+                    print(Calendar.Component.month)
+                    print(customRepetition.selectedDaysOfMonth)
+                // if selection == onThe
+                    //print(customRepetition.ordinal)
+                    //print(customRepetition.weekday)
+            case .yearly:
+                print(Calendar.Component.year)
+                print(customRepetition.selectedMonthsOfYear)
+                if customRepetition.isDayOfWeekSelected {
+                    print(customRepetition.ordinal)
+                    print(customRepetition.weekday)
+                }
+            default:
+                print("Something else")
+            }
+            
         }
     }
     

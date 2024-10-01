@@ -15,6 +15,7 @@ struct AddTodoView: View {
     @State private var priority: Priority = .normal
     @State private var repetition: Repetition = .never
     @State private var endRepeat: EndRepeat?
+    @State private var customRepetition: CustomRepetition = .initialValue
     
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
@@ -27,7 +28,8 @@ struct AddTodoView: View {
                 dueDate: $dueDate,
                 priority: $priority,
                 repetition: $repetition,
-                endRepeat: $endRepeat
+                endRepeat: $endRepeat,
+                customRepetition: $customRepetition
             )
             .navigationTitle("Add todo item")
             .toolbar {
@@ -81,12 +83,34 @@ struct AddTodoView: View {
         guard let endDate else {
             return [dueDate]
         }
+        let calendar = Calendar.current
+        // Start date has already been set,
+        // Now we would have to add a value to get for example, all mondays of the week, or the third Wednesday of the month
+
+//        if let dateComponents = getDateComponent(from: component) {
+//            let nextDay = calendar.nextDate(after: .now, matching: dateComponents, matchingPolicy: .strict)
+//            print(nextDay)
+//        }
         
         while startDate < endDate {
             startDate = Calendar.current.date(byAdding: component, value: value, to: startDate)!
             dates.append(startDate)
         }
         return dates
+    }
+    
+    func getDateComponent(from component: Calendar.Component) -> DateComponents? {
+        switch component {
+        case .year:
+            return DateComponents(year: 1)
+        case .month:
+            return DateComponents(month: 1)
+        case .weekOfYear:
+            print(DateHelper.weekdayInt(from: customRepetition.selectedDaysOfWeek.first))
+            return DateComponents(weekday: DateHelper.weekdayInt(from: customRepetition.selectedDaysOfWeek.first))
+        default:
+            return nil
+        }
     }
 }
 

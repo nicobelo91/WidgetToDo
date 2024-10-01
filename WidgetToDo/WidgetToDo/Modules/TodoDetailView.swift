@@ -16,6 +16,7 @@ struct TodoDetailView: View {
     @State private var completed: Bool = false
     @State private var repetition: Repetition = .never
     @State private var endRepeat: EndRepeat?
+    @State private var customRepetition: CustomRepetition = .initialValue
     
     var todo: Todo
     @Environment(\.modelContext) private var context
@@ -28,7 +29,8 @@ struct TodoDetailView: View {
                 dueDate: $dueDate,
                 priority: $priority,
                 repetition: $repetition,
-                endRepeat: $endRepeat
+                endRepeat: $endRepeat,
+                customRepetition: $customRepetition
             )
             .navigationTitle("Todo Detail")
             .toolbar {
@@ -63,6 +65,8 @@ struct TodoDetailView: View {
                 completed = todo.isCompleted
                 repetition = todo.repetition
                 endRepeat = todo.endRepeat
+                // Show value for custom repetition
+                //customRepetion = todo.customRepetion
             }
         }
     }

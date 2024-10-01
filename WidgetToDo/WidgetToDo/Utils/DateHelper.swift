@@ -46,7 +46,21 @@ struct DateHelper {
         return formatter2.string(from: monthDate)
     }
     
-    static func datesOfCurrentMonth(with weekday : Int) -> [Date] {
+//    func weekdayNameFrom(weekdayNumber: Int) -> String {
+//        let calendar = Calendar.current
+//        let dayIndex = ((weekdayNumber - 1) + (calendar.firstWeekday - 1)) % 7
+//        return calendar.weekdaySymbols[dayIndex]
+//    }
+    
+    static func weekdayInt(from weekdaySymbol: String?) -> Int {
+        let calendar = Calendar.current
+        if let dayIndex = calendar.weekdaySymbols.firstIndex(where: { $0 == weekdaySymbol}) {
+            return dayIndex + 1
+        }
+        return 0
+    }
+    
+    static func datesOfCurrentMonth(with weekday: Int) -> [Date] {
         let calendar = Calendar.current
         var components = calendar.dateComponents([.year, .month, .weekdayOrdinal], from: Date())
         components.weekday = weekday
