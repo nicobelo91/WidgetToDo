@@ -15,4 +15,9 @@ extension Date {
         
         return calendar.date(byAdding: .day, value: 1, to: startOfDay)!
     }
+    
+    func startOfMonth() -> Date {
+        let calendar = Calendar.current
+        return calendar.date(from: calendar.dateComponents([.year, .month], from: calendar.startOfDay(for: self)))!
+    }
 }

@@ -107,7 +107,7 @@ struct AddTodoView: View {
                     while startDate < endDate {
                         startDate = calendar.date(byAdding: component, value: value, to: startDate)!
                         if startDate < endDate {
-                            dates.append(startDate)
+                            dates.append(newDate(basedOn: startDate, endDate: endDate))
                         }
                     }
                 }
@@ -124,6 +124,29 @@ struct AddTodoView: View {
         return dates
     }
     
+    /// Returns a date based on the user's decision to select a specific day of the week
+    /// E.g.: the second Thursday of the month
+    private func newDate(basedOn currentDate: Date, endDate: Date) -> Date {
+        var date = currentDate
+        if currentDate < endDate {
+            if customRepetition.isDayOfWeekSelected {
+                let componenets = Calendar.current.dateComponents([.hour, .minute], from: dueDate)
+                let dateComponents = DateComponents(
+                    hour: componenets.hour,
+                    minute: componenets.minute,
+                    weekday: DateHelper.weekdayInt(from: customRepetition.weekday),
+                    weekdayOrdinal: customRepetition.ordinal.rawValue
+                )
+                // We set the currentDate to the first day of the month,
+                // so that we can fetch the the desired day of the selected week using Calendar.current.nextDate
+                if let updatedDate = Calendar.current.nextDate(after: currentDate.startOfMonth(), matching: dateComponents, matchingPolicy: .strict) {
+                    date = updatedDate
+                }
+            }
+        }
+        return date
+    }
+    
     /// If custom repetition is chosen, the user can select on which day the task should be repeated
     /// E.g. Repeat weekly on Wednesdays.
     /// So in that example,  we would need to fetch the first Wednesday after the startDate
@@ -134,7 +157,7 @@ struct AddTodoView: View {
         case .year:
             return getYearlyDateComponents()
         case .month:
-            return [DateComponents(month: 1)]
+            return getMonthlyDateComponents()
         case .weekOfYear:
             return getWeeklyDateComponents()
         default:
@@ -163,6 +186,24 @@ struct AddTodoView: View {
         let componenets = Calendar.current.dateComponents([.hour, .minute], from: dueDate)
 
         // Enter monthly logic
+        if customRepetition.isDayOfWeekSelected {
+            let dayComponents = DateComponents(
+                hour: componenets.hour,
+                minute: componenets.minute,
+                weekday: DateHelper.weekdayInt(from: customRepetition.weekday),
+                weekdayOrdinal: customRepetition.ordinal.rawValue
+            )
+            dateComponents.append(dayComponents)
+        } else {
+            for day in customRepetition.selectedDaysOfMonth {
+                let dayComponents = DateComponents(
+                    day: day,
+                    hour: componenets.hour,
+                    minute: componenets.minute
+                )
+                dateComponents.append(dayComponents)
+            }
+        }
 
         return dateComponents
     }
@@ -170,19 +211,37 @@ struct AddTodoView: View {
     /// Handles the logic for retrieving the date componenets for the yearly custom selection
     private func getYearlyDateComponents() -> [DateComponents] {
         var dateComponents = [DateComponents]()
-        let componenets = Calendar.current.dateComponents([.hour, .minute], from: dueDate)
-        // Enter yearly logic
+        var monthComponents: DateComponents
         for month in customRepetition.selectedMonthsOfYear {
-            let monthInt = DateComponents(
+            monthComponents = getMonthComponents(for: month)
+            dateComponents.append(monthComponents)
+        }
+        return dateComponents
+    }
+    
+    /// Fetches the necessary components to get the desired date in the selected month
+    private func getMonthComponents(for month: String) -> DateComponents {
+        let componenets = Calendar.current.dateComponents([.day, .hour, .minute], from: dueDate)
+        // If the user selected a specific day of the week
+        // E.g: the second Thursday of the month
+        if customRepetition.isDayOfWeekSelected {
+            return DateComponents(
                 month: DateHelper.monthInt(from: month),
                 hour: componenets.hour,
                 minute: componenets.minute,
                 weekday: DateHelper.weekdayInt(from: customRepetition.weekday),
                 weekdayOrdinal: customRepetition.ordinal.rawValue
             )
-            dateComponents.append(monthInt)
+        } else {
+            // We simply fetch the same day of the month for every year
+            // E.g. Every October 2nd
+            return DateComponents(
+                month: DateHelper.monthInt(from: month),
+                day: componenets.day,
+                hour: componenets.hour,
+                minute: componenets.minute
+            )
         }
-        return dateComponents
     }
 }
 
