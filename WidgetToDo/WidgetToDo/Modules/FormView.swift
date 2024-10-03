@@ -10,6 +10,9 @@ import SwiftUI
 struct FormView: View {
     @Binding var taskName: String
     @Binding var dueDate: Date
+    @Binding var lastsAllDay: Bool
+    @Binding var startDate: Date
+    @Binding var endDate: Date
     @Binding var priority: Priority
     @Binding var repetition: Repetition
     @Binding var endRepeat: EndRepeat?
@@ -24,9 +27,15 @@ struct FormView: View {
             }
             
             Section {
+                Toggle(isOn: $lastsAllDay) {
+                    Text("All day")
+                }
                 DatePicker(selection: $dueDate) {
                     Text("Select a date")
                 }
+                DatePicker("Starts", selection: $startDate, displayedComponents: datePickerComponents)
+                DatePicker("Ends", selection: $endDate, displayedComponents: datePickerComponents)
+                
                 NavigationLink(destination: { RepetitionList(selection: $repetition, customRepetition: $customRepetition) }) {
                     HStack {
                         Text("Repeat")
@@ -77,8 +86,26 @@ struct FormView: View {
             }
         ))
     }
+    
+    private var datePickerComponents: DatePicker<Text>.Components {
+        if lastsAllDay {
+            return .date
+        } else {
+            return [.date, .hourAndMinute]
+        }
+    }
 }
 
 #Preview {
-    FormView(taskName: .constant(""), dueDate: .constant(.now), priority: .constant(.medium), repetition: .constant(.never), endRepeat: .constant(nil), customRepetition: .constant(.initialValue))
+    FormView(
+        taskName: .constant(""),
+        dueDate: .constant(.now),
+        lastsAllDay: .constant(false),
+        startDate: .constant(.now),
+        endDate: .constant(.now),
+        priority: .constant(.medium),
+        repetition: .constant(.never),
+        endRepeat: .constant(nil),
+        customRepetition: .constant(.initialValue)
+    )
 }

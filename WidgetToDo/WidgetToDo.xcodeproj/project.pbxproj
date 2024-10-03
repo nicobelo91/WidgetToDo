@@ -11,11 +11,9 @@
 		7C07FAD22C878ACA00801E27 /* MonthlyRepetitionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FAD12C878ACA00801E27 /* MonthlyRepetitionSection.swift */; };
 		7C07FAD42C878ADE00801E27 /* YearlyRepetitionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FAD32C878ADE00801E27 /* YearlyRepetitionSection.swift */; };
 		7C07FAD62C878AFB00801E27 /* MultipleSelectionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FAD52C878AFB00801E27 /* MultipleSelectionRow.swift */; };
-		7C07FAD82C878EA100801E27 /* Ordinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FAD72C878EA100801E27 /* Ordinal.swift */; };
 		7C07FADC2C879C9A00801E27 /* MultipleSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FADB2C879C9A00801E27 /* MultipleSelectionCell.swift */; };
 		7C3F19432C9BB18300077470 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3F19422C9BB18300077470 /* Int+Extensions.swift */; };
 		7C3F19442C9BB1D000077470 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3F19422C9BB18300077470 /* Int+Extensions.swift */; };
-		7C3F9EE92C8A142800A86E94 /* Ordinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C07FAD72C878EA100801E27 /* Ordinal.swift */; };
 		7C4CFC882C810B2F00093BBE /* CustomRepetitionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4CFC872C810B2F00093BBE /* CustomRepetitionList.swift */; };
 		7C4CFC8A2C810EFF00093BBE /* CustomRepetition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4CFC892C810EFF00093BBE /* CustomRepetition.swift */; };
 		7C4CFC8B2C810F7900093BBE /* CustomRepetition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4CFC892C810EFF00093BBE /* CustomRepetition.swift */; };
@@ -91,7 +89,6 @@
 		7C07FAD12C878ACA00801E27 /* MonthlyRepetitionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyRepetitionSection.swift; sourceTree = "<group>"; };
 		7C07FAD32C878ADE00801E27 /* YearlyRepetitionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearlyRepetitionSection.swift; sourceTree = "<group>"; };
 		7C07FAD52C878AFB00801E27 /* MultipleSelectionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSelectionRow.swift; sourceTree = "<group>"; };
-		7C07FAD72C878EA100801E27 /* Ordinal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ordinal.swift; sourceTree = "<group>"; };
 		7C07FADB2C879C9A00801E27 /* MultipleSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSelectionCell.swift; sourceTree = "<group>"; };
 		7C3F19422C9BB18300077470 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		7C4CFC872C810B2F00093BBE /* CustomRepetitionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRepetitionList.swift; sourceTree = "<group>"; };
@@ -220,7 +217,6 @@
 				7CB77EB52C7E53F90081FC88 /* Priority.swift */,
 				7CB77EB72C7E54160081FC88 /* Repetition.swift */,
 				7C4CFC892C810EFF00093BBE /* CustomRepetition.swift */,
-				7C07FAD72C878EA100801E27 /* Ordinal.swift */,
 				7CB77EB92C7E54200081FC88 /* EndRepeat.swift */,
 			);
 			path = Models;
@@ -446,7 +442,6 @@
 				7CE3D3422C4B02DF009DE92C /* ActiveList.swift in Sources */,
 				7C7E0C122C4ACBEF0093D05C /* Todo.swift in Sources */,
 				7CE3D33C2C4AF6BF009DE92C /* DateHelper.swift in Sources */,
-				7C07FAD82C878EA100801E27 /* Ordinal.swift in Sources */,
 				7CE3D33E2C4AF8FF009DE92C /* AddTodoView.swift in Sources */,
 				7CB77EBA2C7E54200081FC88 /* EndRepeat.swift in Sources */,
 				7CB77EB82C7E54160081FC88 /* Repetition.swift in Sources */,
@@ -475,7 +470,6 @@
 				7CB77EBB2C7E54600081FC88 /* Priority.swift in Sources */,
 				7CE3D3322C4AF31C009DE92C /* WidgetView.swift in Sources */,
 				7CA45C7B2C5AE1A700D6F85F /* DateHelper.swift in Sources */,
-				7C3F9EE92C8A142800A86E94 /* Ordinal.swift in Sources */,
 				7C4CFC8B2C810F7900093BBE /* CustomRepetition.swift in Sources */,
 				7CE3D32D2C4AF2E5009DE92C /* Provider.swift in Sources */,
 				7C7E0C4E2C4AF04E0093D05C /* ToggleButtonIntent.swift in Sources */,

@@ -12,6 +12,9 @@ struct AddTodoView: View {
     
     @State private var taskName: String = ""
     @State private var dueDate: Date = .now
+    @State private var lastsAllDay: Bool = false
+    @State private var startDate: Date = .now
+    @State private var endDate: Date = .now
     @State private var priority: Priority = .normal
     @State private var repetition: Repetition = .never
     @State private var endRepeat: EndRepeat?
@@ -26,6 +29,9 @@ struct AddTodoView: View {
             FormView(
                 taskName: $taskName,
                 dueDate: $dueDate,
+                lastsAllDay: $lastsAllDay,
+                startDate: $startDate,
+                endDate: $endDate,
                 priority: $priority,
                 repetition: $repetition,
                 endRepeat: $endRepeat,
@@ -43,7 +49,16 @@ struct AddTodoView: View {
                         let dueDates = generateDates()
                         
                         for date in dueDates {
-                            let todo = Todo(task: taskName, dueDate: date, priority: priority, repetition: repetition, endRepeat: endRepeat)
+                            let todo = Todo(
+                                task: taskName,
+                                dueDate: date,
+                                lastsAllDay: lastsAllDay,
+                                startDate: startDate,
+                                endDate: endDate,
+                                priority: priority,
+                                repetition: repetition,
+                                endRepeat: endRepeat
+                            )
                             context.insert(todo)
                         }
                         
@@ -123,7 +138,11 @@ struct AddTodoView: View {
         }
         return dates
     }
-    
+}
+
+
+// MARK: - Custom selection Logic
+extension AddTodoView {
     /// Returns a date based on the user's decision to select a specific day of the week
     /// E.g.: the second Thursday of the month
     private func newDate(basedOn currentDate: Date, endDate: Date) -> Date {
@@ -244,6 +263,7 @@ struct AddTodoView: View {
         }
     }
 }
+
 
 #Preview {
     AddTodoView()

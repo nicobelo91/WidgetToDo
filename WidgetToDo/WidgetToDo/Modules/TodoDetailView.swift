@@ -12,6 +12,9 @@ struct TodoDetailView: View {
     
     @State private var taskName: String = ""
     @State private var dueDate: Date = .now
+    @State private var lastsAllDay: Bool = false
+    @State private var startDate: Date = .now
+    @State private var endDate: Date = .now
     @State private var priority: Priority = .normal
     @State private var completed: Bool = false
     @State private var repetition: Repetition = .never
@@ -27,6 +30,9 @@ struct TodoDetailView: View {
             FormView(
                 taskName: $taskName,
                 dueDate: $dueDate,
+                lastsAllDay: $lastsAllDay,
+                startDate: $startDate,
+                endDate: $endDate,
                 priority: $priority,
                 repetition: $repetition,
                 endRepeat: $endRepeat,
