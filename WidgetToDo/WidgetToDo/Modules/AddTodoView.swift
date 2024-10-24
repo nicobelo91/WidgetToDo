@@ -11,7 +11,6 @@ import WidgetKit
 struct AddTodoView: View {
     
     @State private var taskName: String = ""
-    @State private var dueDate: Date = .now
     @State private var lastsAllDay: Bool = false
     @State private var startDate: Date = .now
     @State private var endDate: Date = .now
@@ -28,7 +27,6 @@ struct AddTodoView: View {
         NavigationStack {
             FormView(
                 taskName: $taskName,
-                dueDate: $dueDate,
                 lastsAllDay: $lastsAllDay,
                 startDate: $startDate,
                 endDate: $endDate,
@@ -51,9 +49,8 @@ struct AddTodoView: View {
                         for date in dueDates {
                             let todo = Todo(
                                 task: taskName,
-                                dueDate: date,
                                 lastsAllDay: lastsAllDay,
-                                startDate: startDate,
+                                startDate: date,
                                 endDate: endDate,
                                 priority: priority,
                                 repetition: repetition,
@@ -80,59 +77,62 @@ struct AddTodoView: View {
     }
     
     private func generateDates() -> [Date] {
-        guard let component = repetition.addToDate.component, let value = repetition.addToDate.value else { return [dueDate] }
+        // TODO:  We need to somehow include EndDate in the array of dates
+        // Maybe we could get the original range substracting endDate from startDate
+        // And then, for each new item in the array of dates, we use that range to create a new endDate based on the currentDay
+        guard let component = repetition.addToDate.component, let value = repetition.addToDate.value else { return [startDate] }
         
-        var startDate = dueDate
-        var endDate: Date?
+        var currentDay = startDate
+        var finalDay: Date?
         
-        var dates: [Date] = [dueDate]
+        var dates: [Date] = [startDate]
         
         switch endRepeat {
         case .repeatForever:
-            endDate = Calendar.current.date(byAdding: .year, value: 10, to: startDate)!
+            finalDay = Calendar.current.date(byAdding: .year, value: 10, to: currentDay)!
         case .endRepeatDate(let date):
-            endDate = date
+            finalDay = date
         default:
-            endDate = nil
+            finalDay = nil
         }
         
-        guard let endDate else {
-            return [dueDate]
+        guard let finalDay else {
+            return [startDate]
         }
         let calendar = Calendar.current
         
         // Start date has already been set,
-        // Now we would have to add a value to get (for example) all mondays of the week, or all Februaries in a year
+        // Now we would have to add a value to get (for example) the mondays of each week, or the Februaries of each year
         // So we can repeat a task every week on Mondays, or every year in February
         if let dateComponents = getDateComponents(from: component) {
             // The user can select to have a task repeated.
             // For explaining purposes, let's assume they decided to repeat the task every week on mondays and wednesdays,
-            // so we are going to first get the mondays of every week until endDate,
-            // and then we would get the wednesdays of every week until endDate.
+            // so we are going to first get the monday of each week until the findal day,
+            // and then we would get the wednesday of each week until the final day.
             for dateComponent in dateComponents {
                 // Set the startDate to its initial value
-                startDate = dueDate
+                currentDay = startDate
                 
-                // In order to get the first monday of every week, first we have to get the first monday of the array
-                if let nextDay = calendar.nextDate(after: startDate, matching: dateComponent, matchingPolicy: .strict) {
-                    startDate = nextDay
-                    dates.append(startDate)
+                // In order to get the mondays of each week, first we have to get the first monday of the array
+                if let nextDay = calendar.nextDate(after: currentDay, matching: dateComponent, matchingPolicy: .strict) {
+                    currentDay = nextDay
+                    dates.append(currentDay)
                     
                     // After getting the first monday, we then add a week to it, to retrieve the second monday of the array
-                    while startDate < endDate {
-                        startDate = calendar.date(byAdding: component, value: value, to: startDate)!
-                        if startDate < endDate {
-                            dates.append(newDate(basedOn: startDate, endDate: endDate))
+                    while currentDay < finalDay {
+                        currentDay = calendar.date(byAdding: component, value: value, to: currentDay)!
+                        if currentDay < finalDay {
+                            dates.append(newDate(basedOn: currentDay, dueDate: finalDay))
                         }
                     }
                 }
             }
         } else {
             // If the user didn't select the custom repetition, we simply get the dates repeated the way the user chose
-            while startDate < endDate {
-                startDate = Calendar.current.date(byAdding: component, value: value, to: startDate)!
-                if startDate < endDate {
-                    dates.append(startDate)
+            while currentDay < finalDay {
+                currentDay = Calendar.current.date(byAdding: component, value: value, to: currentDay)!
+                if currentDay < finalDay {
+                    dates.append(currentDay)
                 }
             }
         }
@@ -145,9 +145,9 @@ struct AddTodoView: View {
 extension AddTodoView {
     /// Returns a date based on the user's decision to select a specific day of the week
     /// E.g.: the second Thursday of the month
-    private func newDate(basedOn currentDate: Date, endDate: Date) -> Date {
+    private func newDate(basedOn currentDate: Date, dueDate: Date) -> Date {
         var date = currentDate
-        if currentDate < endDate {
+        if currentDate < dueDate {
             if customRepetition.isDayOfWeekSelected {
                 let componenets = Calendar.current.dateComponents([.hour, .minute], from: dueDate)
                 let dateComponents = DateComponents(
@@ -157,8 +157,8 @@ extension AddTodoView {
                     weekdayOrdinal: customRepetition.ordinal.rawValue
                 )
                 // We set the currentDate to the first day of the month,
-                // so that we can fetch the the desired day of the selected week using Calendar.current.nextDate
-                if let updatedDate = Calendar.current.nextDate(after: currentDate.startOfMonth(), matching: dateComponents, matchingPolicy: .strict) {
+                // so that we can fetch the desired day of the selected week using Calendar.current.nextDate
+                if let updatedDate = Calendar.current.nextDate(after: currentDate.startOfMonth, matching: dateComponents, matchingPolicy: .strict) {
                     date = updatedDate
                 }
             }
@@ -187,7 +187,7 @@ extension AddTodoView {
     /// Handles the logic for retrieving the date componenets for the weekly custom selection
     private func getWeeklyDateComponents() -> [DateComponents] {
         var dateComponents = [DateComponents]()
-        let componenets = Calendar.current.dateComponents([.hour, .minute], from: dueDate)
+        let componenets = Calendar.current.dateComponents([.hour, .minute], from: startDate)
         for dayOfWeek in customRepetition.selectedDaysOfWeek {
             let weekdayInt = DateComponents(
                 hour: componenets.hour,
@@ -202,7 +202,7 @@ extension AddTodoView {
     /// Handles the logic for retrieving the date componenets for the monthly custom selection
     private func getMonthlyDateComponents() -> [DateComponents] {
         var dateComponents = [DateComponents]()
-        let componenets = Calendar.current.dateComponents([.hour, .minute], from: dueDate)
+        let componenets = Calendar.current.dateComponents([.hour, .minute], from: startDate)
 
         // Enter monthly logic
         if customRepetition.isDayOfWeekSelected {
@@ -240,7 +240,7 @@ extension AddTodoView {
     
     /// Fetches the necessary components to get the desired date in the selected month
     private func getMonthComponents(for month: String) -> DateComponents {
-        let componenets = Calendar.current.dateComponents([.day, .hour, .minute], from: dueDate)
+        let componenets = Calendar.current.dateComponents([.day, .hour, .minute], from: startDate)
         // If the user selected a specific day of the week
         // E.g: the second Thursday of the month
         if customRepetition.isDayOfWeekSelected {

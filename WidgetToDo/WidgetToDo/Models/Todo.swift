@@ -15,7 +15,6 @@ class Todo {
     private(set) var id: String = UUID().uuidString
     var task: String
     var isCompleted: Bool = false
-    var dueDate: Date = Date.now
     var lastsAllDay: Bool = false
     var startDate: Date = Date.now
     var endDate: Date = Date.now
@@ -26,7 +25,6 @@ class Todo {
     
     init(
         task: String,
-        dueDate: Date,
         lastsAllDay: Bool,
         startDate: Date,
         endDate: Date,
@@ -35,7 +33,7 @@ class Todo {
         endRepeat: EndRepeat? = nil
     ) {
         self.task = task
-        self.dueDate = dueDate
+        //self.dueDate = dueDate
         self.lastsAllDay = lastsAllDay
         self.startDate = startDate
         self.endDate = endDate
@@ -45,19 +43,19 @@ class Todo {
     }
     
     var isDueToday: Bool {
-        let dateRange = Date.now ... Date.now.endOfDay()
-        return dateRange.contains(dueDate)
+        let dateRange = Date.now ... Date.now.endOfDay
+        return dateRange.contains(startDate)
     }
     
+    
     var isExpired: Bool {
-        dueDate < .now
+        startDate < .now
     }
 }
 
 extension Todo {
     static let example = Todo(
         task: "Brush teeth",
-        dueDate: .now,
         lastsAllDay: false,
         startDate: .now,
         endDate: .now,

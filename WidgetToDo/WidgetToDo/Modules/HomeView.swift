@@ -20,6 +20,8 @@ struct HomeView: View {
             
             CompletedList(showAll: $showAll)
             
+            //TODO: Add OngoingList?
+            
             ExpiredList()
             
         }

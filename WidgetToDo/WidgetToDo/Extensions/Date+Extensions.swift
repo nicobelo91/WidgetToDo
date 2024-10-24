@@ -9,15 +9,29 @@ import Foundation
 
 extension Date {
 
-    func endOfDay() -> Date {
+    var startOfDay: Date {
         let calendar = Calendar.current
-        let startOfDay = calendar.startOfDay(for: self)
-        
-        return calendar.date(byAdding: .day, value: 1, to: startOfDay)!
+        return calendar.startOfDay(for: self)
+      }
+    
+    var endOfDay: Date {
+        var components = DateComponents()
+        components.timeZone = TimeZone(secondsFromGMT: 0)
+        components.day = 1
+        components.second = -1
+        return Calendar.current.date(byAdding: components, to: startOfDay)!
     }
     
-    func startOfMonth() -> Date {
+    func currentHour() -> Date {
         let calendar = Calendar.current
-        return calendar.date(from: calendar.dateComponents([.year, .month], from: calendar.startOfDay(for: self)))!
+        let hour = calendar.component(.hour, from: .now)
+        let minute = calendar.component(.minute, from: .now)
+        
+        return calendar.date(bySettingHour: hour, minute: minute, second: 0, of: self)!
     }
+    
+    var startOfMonth: Date {
+           let components = Calendar.current.dateComponents([.year, .month], from: startOfDay)
+           return Calendar.current.date(from: components)!
+       }
 }

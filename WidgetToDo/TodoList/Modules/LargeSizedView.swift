@@ -31,8 +31,8 @@ struct LargeSizedView: View {
     
     static var todoDescriptor: FetchDescriptor<Todo> {
         let predicate = #Predicate<Todo> { !$0.isCompleted }
-        let sort = [SortDescriptor(\Todo.dueDate, order: .forward)]
-        var descriptor = FetchDescriptor(predicate: predicate, sortBy: sort)
+        let sort = [SortDescriptor(\Todo.startDate, order: .forward)]
+        let descriptor = FetchDescriptor(predicate: predicate, sortBy: sort)
         return descriptor
     }
     

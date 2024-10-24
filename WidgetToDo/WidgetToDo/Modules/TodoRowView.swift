@@ -40,7 +40,7 @@ struct TodoRowView: View {
                 Text(todo.task)
                     .font(.title3)
                     .foregroundStyle(textColor)
-                Text(DateHelper.Formatter.longDateWithTime.string(from: todo.dueDate))
+                Text(dueDate)
                     .font(.caption)
                     .foregroundStyle(textColor)
             }
@@ -55,7 +55,10 @@ struct TodoRowView: View {
             if !todo.isExpired {
                 Menu {
                     ForEach(Priority.allCases, id: \.rawValue) { priority in
-                        Button(action: { todo.priority = priority }) {
+                        Button(action: { 
+                            todo.priority = priority
+                            WidgetCenter.shared.reloadAllTimelines()
+                        }) {
                             HStack {
                                 Text(priority.rawValue.capitalized)
                                 
@@ -105,6 +108,13 @@ struct TodoRowView: View {
         }
     }
     
+    private var dueDate: String {
+        if todo.lastsAllDay {
+            return DateHelper.Formatter.longDate.string(from: todo.startDate)
+        } else {
+            return DateHelper.Formatter.longDateWithTime.string(from: todo.startDate)
+        }
+    }
     private func deleteTask() {
         context.delete(todo)
         WidgetCenter.shared.reloadAllTimelines()
@@ -112,7 +122,7 @@ struct TodoRowView: View {
     
     private func deleteAllRelatedTasks() {
         for todoItem in todoList {
-            if todoItem.task == todo.task, todoItem.dueDate >= todo.dueDate {
+            if todoItem.task == todo.task, todoItem.startDate >= todo.startDate {
                 context.delete(todoItem)
                 WidgetCenter.shared.reloadAllTimelines()
             }

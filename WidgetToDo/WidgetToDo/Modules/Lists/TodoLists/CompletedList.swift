@@ -14,7 +14,7 @@ struct CompletedList: View {
     
     init(showAll: Binding<Bool>) {
         let predicate = #Predicate<Todo> { $0.isCompleted }
-        let sort = [SortDescriptor(\Todo.dueDate, order: .forward)]
+        let sort = [SortDescriptor(\Todo.startDate, order: .forward)]
         
         var descriptor = FetchDescriptor(predicate: predicate, sortBy: sort)
         if !showAll.wrappedValue {

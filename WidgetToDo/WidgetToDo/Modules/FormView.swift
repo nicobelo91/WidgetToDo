@@ -9,7 +9,6 @@ import SwiftUI
 
 struct FormView: View {
     @Binding var taskName: String
-    @Binding var dueDate: Date
     @Binding var lastsAllDay: Bool
     @Binding var startDate: Date
     @Binding var endDate: Date
@@ -30,11 +29,16 @@ struct FormView: View {
                 Toggle(isOn: $lastsAllDay) {
                     Text("All day")
                 }
-                DatePicker(selection: $dueDate) {
-                    Text("Select a date")
+                .onChange(of: lastsAllDay) { _, newValue in
+                   updateStartAndEndDate(basedOn: newValue)
                 }
                 DatePicker("Starts", selection: $startDate, displayedComponents: datePickerComponents)
                 DatePicker("Ends", selection: $endDate, displayedComponents: datePickerComponents)
+                    .onChange(of: startDate) { oldValue, newValue in
+                        if newValue > endDate {
+                            endDate = newValue
+                        }
+                    }
                 
                 NavigationLink(destination: { RepetitionList(selection: $repetition, customRepetition: $customRepetition) }) {
                     HStack {
@@ -94,12 +98,24 @@ struct FormView: View {
             return [.date, .hourAndMinute]
         }
     }
+    
+    private func updateStartAndEndDate(basedOn newValue: Bool) {
+        // If user has set lastsAllDay to true
+        // We set the starting time to 00:00 and the finish time at 23:59
+        if newValue {
+            startDate = startDate.startOfDay
+            endDate = endDate.endOfDay
+        } else {
+            // We use the current time for starting and finish time
+            startDate = startDate.currentHour()
+            endDate = endDate.currentHour()
+        }
+    }
 }
 
 #Preview {
     FormView(
         taskName: .constant(""),
-        dueDate: .constant(.now),
         lastsAllDay: .constant(false),
         startDate: .constant(.now),
         endDate: .constant(.now),

@@ -27,7 +27,7 @@ struct WidgetRowView: View {
             Spacer(minLength: 0)
             
             if !isWidgetSmall {
-                Text("Today, \(DateHelper.Formatter.shortTime.string(from: todo.dueDate))")
+                Text("Today, \(DateHelper.Formatter.shortTime.string(from: todo.startDate))")
                     .font(.caption)
             }
         }

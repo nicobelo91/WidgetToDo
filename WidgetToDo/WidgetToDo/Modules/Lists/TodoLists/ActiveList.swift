@@ -21,14 +21,14 @@ struct ActiveList: View {
     
     static var todoDescriptor: FetchDescriptor<Todo> {
         let predicate = #Predicate<Todo> { !$0.isCompleted }
-        let sort = [SortDescriptor(\Todo.dueDate, order: .forward)]
+        let sort = [SortDescriptor(\Todo.startDate, order: .forward)]
         let descriptor = FetchDescriptor(predicate: predicate, sortBy: sort)
         return descriptor
     }
     
     /// Since date isn't yet available to be used on the #Predicate macro, in the meantime, the following workaround can be used:
     var filteredTodos: [Todo] {
-        activeList.filter({ $0.dueDate > .now.endOfDay()})
+        activeList.filter({ $0.startDate > .now.endOfDay})
     }
     
     var activeSectionTitle: String {

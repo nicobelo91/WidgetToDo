@@ -11,7 +11,6 @@ import WidgetKit
 struct TodoDetailView: View {
     
     @State private var taskName: String = ""
-    @State private var dueDate: Date = .now
     @State private var lastsAllDay: Bool = false
     @State private var startDate: Date = .now
     @State private var endDate: Date = .now
@@ -27,17 +26,35 @@ struct TodoDetailView: View {
     
     var body: some View {
         NavigationStack {
-            FormView(
-                taskName: $taskName,
-                dueDate: $dueDate,
-                lastsAllDay: $lastsAllDay,
-                startDate: $startDate,
-                endDate: $endDate,
-                priority: $priority,
-                repetition: $repetition,
-                endRepeat: $endRepeat,
-                customRepetition: $customRepetition
-            )
+            VStack {
+                FormView(
+                    taskName: $taskName,
+                    lastsAllDay: $lastsAllDay,
+                    startDate: $startDate,
+                    endDate: $endDate,
+                    priority: $priority,
+                    repetition: $repetition,
+                    endRepeat: $endRepeat,
+                    customRepetition: $customRepetition
+                )
+                
+                Button(action: {
+                    todo.isCompleted = true
+                    todo.lastUpdated = .now
+                    WidgetCenter.shared.reloadAllTimelines()
+                }) {
+                    Text("Complete Task")
+                        .tint(.white)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .frame(height: 50)
+                        .background(todo.isCompleted ? .gray.opacity(0.3) : .blue, in: .capsule)
+                        .padding(.horizontal)
+                }
+                .disabled(todo.isCompleted)
+                
+            }
             .navigationTitle("Todo Detail")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -48,7 +65,9 @@ struct TodoDetailView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
                         todo.task = taskName
-                        todo.dueDate = dueDate
+                        todo.lastsAllDay = lastsAllDay
+                        todo.startDate = startDate
+                        todo.endDate = endDate
                         todo.priority = priority
                         todo.repetition = repetition
                         todo.endRepeat = endRepeat
@@ -66,7 +85,9 @@ struct TodoDetailView: View {
             }
             .onAppear {
                 taskName = todo.task
-                dueDate = todo.dueDate
+                lastsAllDay = todo.lastsAllDay
+                startDate = todo.startDate
+                endDate = todo.endDate
                 priority = todo.priority
                 completed = todo.isCompleted
                 repetition = todo.repetition
