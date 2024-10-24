@@ -13,7 +13,7 @@ struct TodoDetailView: View {
     @State private var taskName: String = ""
     @State private var lastsAllDay: Bool = false
     @State private var startDate: Date = .now
-    @State private var endDate: Date = .now
+    @State private var durationInSeconds: Int?
     @State private var priority: Priority = .normal
     @State private var completed: Bool = false
     @State private var repetition: Repetition = .never
@@ -31,17 +31,18 @@ struct TodoDetailView: View {
                     taskName: $taskName,
                     lastsAllDay: $lastsAllDay,
                     startDate: $startDate,
-                    endDate: $endDate,
                     priority: $priority,
                     repetition: $repetition,
                     endRepeat: $endRepeat,
-                    customRepetition: $customRepetition
+                    customRepetition: $customRepetition,
+                    durationInSeconds: $durationInSeconds
                 )
                 
                 Button(action: {
                     todo.isCompleted = true
                     todo.lastUpdated = .now
                     WidgetCenter.shared.reloadAllTimelines()
+                    dismiss()
                 }) {
                     Text("Complete Task")
                         .tint(.white)
@@ -67,7 +68,7 @@ struct TodoDetailView: View {
                         todo.task = taskName
                         todo.lastsAllDay = lastsAllDay
                         todo.startDate = startDate
-                        todo.endDate = endDate
+                        todo.durationInSeconds = durationInSeconds
                         todo.priority = priority
                         todo.repetition = repetition
                         todo.endRepeat = endRepeat
@@ -87,7 +88,7 @@ struct TodoDetailView: View {
                 taskName = todo.task
                 lastsAllDay = todo.lastsAllDay
                 startDate = todo.startDate
-                endDate = todo.endDate
+                durationInSeconds = todo.durationInSeconds
                 priority = todo.priority
                 completed = todo.isCompleted
                 repetition = todo.repetition

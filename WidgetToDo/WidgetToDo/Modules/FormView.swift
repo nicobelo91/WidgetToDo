@@ -11,12 +11,14 @@ struct FormView: View {
     @Binding var taskName: String
     @Binding var lastsAllDay: Bool
     @Binding var startDate: Date
-    @Binding var endDate: Date
     @Binding var priority: Priority
     @Binding var repetition: Repetition
     @Binding var endRepeat: EndRepeat?
     @Binding var customRepetition: CustomRepetition
     
+    @Binding var durationInSeconds: Int?
+    
+    @State private var hasDuration = false
     var body: some View {
         Form {
             Section {
@@ -30,15 +32,15 @@ struct FormView: View {
                     Text("All day")
                 }
                 .onChange(of: lastsAllDay) { _, newValue in
-                   updateStartAndEndDate(basedOn: newValue)
+                   updateStartDate(basedOn: newValue)
                 }
                 DatePicker("Starts", selection: $startDate, displayedComponents: datePickerComponents)
-                DatePicker("Ends", selection: $endDate, displayedComponents: datePickerComponents)
-                    .onChange(of: startDate) { oldValue, newValue in
-                        if newValue > endDate {
-                            endDate = newValue
-                        }
-                    }
+                Toggle(isOn: $hasDuration) {
+                    Text("Duration")
+                }
+                if hasDuration {
+                    CustomPickerView(seconds: $durationInSeconds)
+                }
                 
                 NavigationLink(destination: { RepetitionList(selection: $repetition, customRepetition: $customRepetition) }) {
                     HStack {
@@ -66,6 +68,11 @@ struct FormView: View {
                 }
             } header: {
                 Text("Due Date")
+            }
+            .onChange(of: hasDuration) { _, newValue in
+                if !newValue {
+                    durationInSeconds = nil
+                }
             }
             
             Section {
@@ -99,16 +106,14 @@ struct FormView: View {
         }
     }
     
-    private func updateStartAndEndDate(basedOn newValue: Bool) {
+    private func updateStartDate(basedOn newValue: Bool) {
         // If user has set lastsAllDay to true
-        // We set the starting time to 00:00 and the finish time at 23:59
+        // We set the starting time to 00:00
         if newValue {
             startDate = startDate.startOfDay
-            endDate = endDate.endOfDay
         } else {
-            // We use the current time for starting and finish time
+            // We use the current time for starting time
             startDate = startDate.currentHour()
-            endDate = endDate.currentHour()
         }
     }
 }
@@ -118,10 +123,10 @@ struct FormView: View {
         taskName: .constant(""),
         lastsAllDay: .constant(false),
         startDate: .constant(.now),
-        endDate: .constant(.now),
         priority: .constant(.medium),
         repetition: .constant(.never),
         endRepeat: .constant(nil),
-        customRepetition: .constant(.initialValue)
+        customRepetition: .constant(.initialValue),
+        durationInSeconds: .constant(60)
     )
 }

@@ -17,7 +17,7 @@ class Todo {
     var isCompleted: Bool = false
     var lastsAllDay: Bool = false
     var startDate: Date = Date.now
-    var endDate: Date = Date.now
+    var durationInSeconds: Int?
     var priority: Priority = Priority.normal
     var repetition: Repetition = Repetition.never
     var endRepeat: EndRepeat?
@@ -27,16 +27,15 @@ class Todo {
         task: String,
         lastsAllDay: Bool,
         startDate: Date,
-        endDate: Date,
+        durationInSeconds: Int?,
         priority: Priority,
         repetition: Repetition,
         endRepeat: EndRepeat? = nil
     ) {
         self.task = task
-        //self.dueDate = dueDate
         self.lastsAllDay = lastsAllDay
         self.startDate = startDate
-        self.endDate = endDate
+        self.durationInSeconds = durationInSeconds
         self.priority = priority
         self.repetition = repetition
         self.endRepeat = endRepeat
@@ -58,7 +57,7 @@ extension Todo {
         task: "Brush teeth",
         lastsAllDay: false,
         startDate: .now,
-        endDate: .now,
+        durationInSeconds: 60,
         priority: .normal,
         repetition: .never
     )

@@ -13,7 +13,7 @@ struct AddTodoView: View {
     @State private var taskName: String = ""
     @State private var lastsAllDay: Bool = false
     @State private var startDate: Date = .now
-    @State private var endDate: Date = .now
+    @State private var durationInSeconds: Int?
     @State private var priority: Priority = .normal
     @State private var repetition: Repetition = .never
     @State private var endRepeat: EndRepeat?
@@ -29,11 +29,11 @@ struct AddTodoView: View {
                 taskName: $taskName,
                 lastsAllDay: $lastsAllDay,
                 startDate: $startDate,
-                endDate: $endDate,
                 priority: $priority,
                 repetition: $repetition,
                 endRepeat: $endRepeat,
-                customRepetition: $customRepetition
+                customRepetition: $customRepetition,
+                durationInSeconds: $durationInSeconds
             )
             .navigationTitle("Add todo item")
             .toolbar {
@@ -51,7 +51,7 @@ struct AddTodoView: View {
                                 task: taskName,
                                 lastsAllDay: lastsAllDay,
                                 startDate: date,
-                                endDate: endDate,
+                                durationInSeconds: durationInSeconds,
                                 priority: priority,
                                 repetition: repetition,
                                 endRepeat: endRepeat

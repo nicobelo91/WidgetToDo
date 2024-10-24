@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -135,6 +135,10 @@
 		7CE3D34A2C4B0ECA009DE92C /* TodoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		7CC8C9122CCADD2A004C409D /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		7C7E0BFC2C4ACA190093D05C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -225,6 +229,7 @@
 		7C7E0C132C4ACCB00093D05C /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				7CC8C9122CCADD2A004C409D /* Views */,
 				7C7E0C152C4ACCE00093D05C /* HomeView.swift */,
 				7CE3D33D2C4AF8FF009DE92C /* AddTodoView.swift */,
 				7C7E0C192C4AE13D0093D05C /* TodoRowView.swift */,
@@ -337,6 +342,9 @@
 			);
 			dependencies = (
 				7C7E0C442C4AEC8F0093D05C /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				7CC8C9122CCADD2A004C409D /* Views */,
 			);
 			name = WidgetToDo;
 			productName = WidgetToDo;
